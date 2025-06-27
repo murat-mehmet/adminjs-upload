@@ -3,7 +3,7 @@ import { Box, Button, Icon } from '@adminjs/design-system'
 import { flat, ShowPropertyProps } from 'adminjs'
 import React, { FC } from 'react'
 import { AudioMimeTypes, ImageMimeTypes } from '../types/mime-types.type.js'
-import PropertyCustom from '../types/property-custom.type.js'
+import buildCustom from '../utils/build-custom.js'
 
 type Props = ShowPropertyProps & {
   width?: number | string;
@@ -50,7 +50,7 @@ const SingleFile: FC<SingleFileProps> = (props) => {
 }
 
 const File: FC<Props> = ({ width, record, property }) => {
-  const { custom } = property as unknown as { custom: PropertyCustom }
+  const custom = buildCustom(property)
 
   let path = flat.get(record?.params, custom.filePathProperty)
 

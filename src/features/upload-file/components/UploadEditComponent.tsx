@@ -1,19 +1,21 @@
 import { DropZone, DropZoneItem, FormGroup, Label } from '@adminjs/design-system'
 import { EditPropertyProps, flat, useTranslation } from 'adminjs'
 import React, { FC, useEffect, useState } from 'react'
-import PropertyCustom from '../types/property-custom.type.js'
+import buildCustom from '../utils/build-custom.js'
 
 const Edit: FC<EditPropertyProps> = ({ property, record, onChange }) => {
   const { translateProperty } = useTranslation()
   const { params } = record
-  const { custom } = property as unknown as { custom: PropertyCustom }
+  const custom = buildCustom(property)
 
   const path = flat.get(params, custom.filePathProperty)
   const key = flat.get(params, custom.keyProperty)
   const file = flat.get(params, custom.fileProperty)
 
   const [originalKey, setOriginalKey] = useState(key)
-  const [filesToUpload, setFilesToUpload] = useState<Array<File>>([])
+  const [filesToUpload, setFilesToUpload] = useState<Array<File>>(
+    (Array.isArray(file) && file[0] instanceof File) ? file : [],
+  )
 
   useEffect(() => {
     // it means means that someone hit save and new file has been uploaded
@@ -25,7 +27,7 @@ const Edit: FC<EditPropertyProps> = ({ property, record, onChange }) => {
       || (typeof key !== 'string' && Array.isArray(key) && key.length !== originalKey.length)
     ) {
       setOriginalKey(key)
-      setFilesToUpload([])
+      // setFilesToUpload([])
     }
   }, [key, originalKey])
 

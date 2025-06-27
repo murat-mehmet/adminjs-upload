@@ -98,6 +98,10 @@ export type UploadOptions = {
    * Indicates if feature should handle uploading multiple files
    */
   multiple?: boolean,
+  /**
+   * Array property that the properties are nested within.
+   */
+  parentArray?: string,
 
   /** Validation rules */
   validation?: {
@@ -122,6 +126,7 @@ export type UploadOptionsWithDefault = {
 
 export type FeatureInvocation = {
   properties: Partial<UploadOptions['properties']>
+  parentArray?: string
 }
 
 export type ProviderOptions = Required<Exclude<UploadOptions['provider'], BaseProvider>>
