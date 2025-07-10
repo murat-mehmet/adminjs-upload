@@ -72,10 +72,11 @@ export const stripPayloadFactory = (
         if (parent) {
           for (let index = 0; index < parent.length; index += 1) {
             const basePath = [parentArray, index].join(flat.DELIMITER)
-            filteredPayload = flat.filterOutParams(
-              filteredPayload,
-              [basePath, properties.file].join(flat.DELIMITER),
-            )
+            if (Array.isArray(flat.get(filteredPayload, [basePath, properties.file].join(flat.DELIMITER)))) // strip upload
+              filteredPayload = flat.filterOutParams(
+                filteredPayload,
+                [basePath, properties.file].join(flat.DELIMITER),
+              )
             filteredPayload = flat.filterOutParams(
               filteredPayload,
               [basePath, properties.filesToDelete].join(flat.DELIMITER),

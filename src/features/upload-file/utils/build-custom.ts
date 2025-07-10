@@ -19,6 +19,7 @@ export default (property: PropertyJSON): PropertyCustom => {
       'filePathProperty',
       'filesToDeleteProperty',
       'keyProperty',
+      'mimeTypeProperty',
     ].reduce((memo, prop) => {
       const val = custom[prop]
       return {
